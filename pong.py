@@ -28,7 +28,7 @@ WIDTH = 600
 HEIGHT = 400
 BALL_RADIUS = 20
 PAD_WIDTH = 8
-PAD_HEIGHT = 80
+PAD_HEIGHT = 100
 HALF_PAD_WIDTH = PAD_WIDTH / 2
 HALF_PAD_HEIGHT = PAD_HEIGHT / 2
 ball_pos = [0,0]
@@ -193,13 +193,13 @@ def keydown(event):
     global paddle1_vel, paddle2_vel
 
     if event.key == K_UP:
-        paddle2_vel = -8
+        paddle2_vel = -10
     elif event.key == K_DOWN:
-        paddle2_vel = 8
+        paddle2_vel = 10
     elif event.key == K_w:
-        paddle1_vel = -8
+        paddle1_vel = -10
     elif event.key == K_s:
-        paddle1_vel = 8
+        paddle1_vel = 10
 
 #keyup handler
 def keyup(event):
@@ -219,11 +219,11 @@ while True:
     time.sleep(0.01)
     draw(window)
 
-    # getPaddle1Postition()
-    # getPaddle2Postition()
+    getPaddle1Postition()
+    getPaddle2Postition()
 
-    # paddle1_pos = [3, position1]
-    # paddle2_pos = [596, position2]
+    paddle1_pos = [3, position1]
+    paddle2_pos = [596, position2]
 
 
     for event in pygame.event.get():
