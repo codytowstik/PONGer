@@ -12,15 +12,23 @@ import cv2
 import time
 from firebase import firebase
 
-firebase = firebase.FirebaseApplication('https://ponger-129e0.firebaseio.com/', None)
+#firebase = firebase.FirebaseApplication('https://ponger-129e0.firebaseio.com/', None)
 
 maxPos = 1000
 minPos = 0
 
 new_user = "hello"
+#result = firebase.post('/positions', maxPos, {'print': 'pretty'}, {'X_FANCY_HEADER': 'VERY FANCY'})
+
 #success = firebase.post('/location', maxPos)
 incrementer = 0
 
+filer = open('localData', "r")
+files = open('localData', "w")
+files.write("Hello")
+print filer.readline()
+filer.close()
+files.close()
 
 now = time.time()
 time.sleep(.003)
@@ -111,8 +119,9 @@ while True:
 				percentage = 0
 			if percentage > 100:
 				percentage = 100
-			print percentage
-			print "Alicia's Function"
+				
+			f = pipes.Template().open('percent.txt', 'w')
+		    f.write("{}".format(percentage))
 			
 		M = cv2.moments(c)
 		center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
@@ -149,5 +158,6 @@ while True:
 		break
 
 # cleanup the camera and close any open windows
+f.close()
 camera.release()
 cv2.destroyAllWindows()
