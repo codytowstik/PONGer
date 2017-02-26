@@ -5,6 +5,8 @@ import pygame, sys
 from pygame.locals import *
 import time
 import random
+import pipes
+# from temp import myTemp
 
 pygame.init()
 fps = pygame.time.Clock()
@@ -32,18 +34,28 @@ r_score = 0
 
 #canvas declaration
 window = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
-pygame.display.set_caption('Hello World')
+pygame.display.set_caption('PONGer')
 
 position1 = 200
 position2 = 200
 
-def setPaddle1Position(pos):
+def setPaddle1Position(percentage):
     global position1
-    position1 = pos
+    position1 = getYCoord(percentage)
+
+def getPaddle1Postition():
+    percent = 0
+    f = pipes.Template().open('percent.txt', 'r')
+    for line in f:
+        setPaddle1Position(float(line))
 
 def setPaddle2Position(pos):
     global position2
-    position2 = pos
+    position2 = int(pos)
+
+def getYCoord(percentage):
+    return int(320 * percentage + 40)
+
 
 # helper function that spawns a ball, returns a position vector and a velocity vector
 # if right is True, spawn to the right, else spawn to the left
@@ -192,7 +204,9 @@ init()
 #game loop
 while True:
     draw(window)
-    
+
+    getPaddle1Postition()
+
     paddle1_pos = [3, position1]
 
     for event in pygame.event.get():
