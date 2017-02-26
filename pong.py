@@ -5,6 +5,7 @@ import pygame, sys
 from pygame.locals import *
 import time
 import random
+# from temp import myTemp
 
 pygame.init()
 fps = pygame.time.Clock()
@@ -41,14 +42,18 @@ def setPaddle1Position(percentage):
     global position1
     position1 = getYCoord(percentage)
 
+def getPaddle1Postition():
+    percent = 0
+    with open('percent.txt') as inputfile:
+        for line in inputfile:
+            setPaddle1Position(float(line))
+
 def setPaddle2Position(pos):
     global position2
-    position2 = pos
+    position2 = int(pos)
 
 def getYCoord(percentage):
-    return 320 * percentage + 40
-
-
+    return int(320 * percentage + 40)
 
 
 # helper function that spawns a ball, returns a position vector and a velocity vector
@@ -199,8 +204,10 @@ init()
 while True:
     draw(window)
 
+    getPaddle1Postition()
+
     paddle1_pos = [3, position1]
-    print(paddle2_pos)
+
     for event in pygame.event.get():
         if event.type == KEYDOWN:
             keydown(event)
