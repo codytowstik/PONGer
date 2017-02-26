@@ -5,6 +5,7 @@ import pygame, sys
 from pygame.locals import *
 import time
 import random
+import pipes
 # from temp import myTemp
 
 pygame.init()
@@ -44,9 +45,9 @@ def setPaddle1Position(percentage):
 
 def getPaddle1Postition():
     percent = 0
-    with open('percent.txt') as inputfile:
-        for line in inputfile:
-            setPaddle1Position(float(line))
+    f = pipes.Template().open('percent.txt', 'r')
+    for line in f:
+        setPaddle1Position(float(line))
 
 def setPaddle2Position(pos):
     global position2
