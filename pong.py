@@ -45,13 +45,19 @@ def setPaddle1Position(percentage):
 
 def getPaddle1Postition():
     percent = 0
-    f = pipes.Template().open('percent.txt', 'r')
+    f = pipes.Template().open('percent1.txt', 'r')
     for line in f:
         setPaddle1Position(float(line))
+        
+def getPaddle2Postition():
+    percent = 0
+    f = pipes.Template().open('percent2.txt', 'r')
+    for line in f:
+        setPaddle2Position(float(line))
 
-def setPaddle2Position(pos):
+def setPaddle2Position(percentage):
     global position2
-    position2 = int(pos)
+    position2 = getYCoord(percentage)
 
 def getYCoord(percentage):
     return int(320 * percentage + 40)
@@ -201,13 +207,18 @@ def keyup(event):
 
 init()
 
+
 #game loop
 while True:
+    time.sleep(0.01)
     draw(window)
 
     getPaddle1Postition()
+    getPaddle2Postition()
 
     paddle1_pos = [3, position1]
+    paddle2_pos = [596, position2]
+
 
     for event in pygame.event.get():
         if event.type == KEYDOWN:
