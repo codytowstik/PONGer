@@ -32,17 +32,24 @@ r_score = 0
 
 #canvas declaration
 window = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
-pygame.display.set_caption('Hello World')
+pygame.display.set_caption('PONGer')
 
 position1 = 200
 position2 = 200
-def setPaddle1Position(pos):
+
+def setPaddle1Position(percentage):
     global position1
-    position1 = pos
+    position1 = getYCoord(percentage)
 
 def setPaddle2Position(pos):
     global position2
     position2 = pos
+
+def getYCoord(percentage):
+    return 320 * percentage + 40
+
+
+
 
 # helper function that spawns a ball, returns a position vector and a velocity vector
 # if right is True, spawn to the right, else spawn to the left
@@ -78,20 +85,8 @@ def calibrateBall():
           pygame.display.flip()
           label2 = myfont2.render(str(12 - i), 1, (0,0,0))
           screen.blit(label2, (290,100))
-        #   pygame.display.flip()
-    #   time.sleep(5)
+
       running = 0
-
-    #   pygame.display.flip()
-    # window.fill(BLACK)
-    #
-    # myfont1 = pygame.font.SysFont("Comic Sans MS", 20)
-    # label1 = myfont1.render("Score "+str(l_score), 1, (255,255,0))
-    # window.blit(label1, (50,20))
-    # pygame.display.update()
-    # time.sleep(5)
-
-
 
 # define event handlers
 def init():
@@ -200,27 +195,12 @@ def keyup(event):
 
 init()
 
-# pygame.event.post(pygame.event.Event(KEYDOWN, key = 274))
-# pygame.event.post(pygame.event.Event(KEYDOWN, key = 274))
-# pygame.event.post(pygame.event.Event(KEYDOWN, key = 274))
-# pygame.event.post(pygame.event.Event(KEYUP, key = 274))
-
-
-# myfont1 = pygame.font.SysFont("Comic Sans MS", 20)
-# labelTest = myfont1.render("Move the controller as high and as low as you can", 1, (255, 255, 0))
-# window.blit(labelTest, (140, 20))
-# time.sleep(5)
-# window.blit(labelTest, (-100, -100))
 #game loop
 while True:
     draw(window)
-    setPaddle1Position(random.randint(50, 300))
-    # setPaddle2Position(random.randint(50, 300))
 
-    # paddle1_pos = [3, position1]
-    # paddle2_pos = [597, position2]
-    # print(paddle2_pos)
-
+    paddle1_pos = [3, position1]
+    print(paddle2_pos)
     for event in pygame.event.get():
         if event.type == KEYDOWN:
             keydown(event)
