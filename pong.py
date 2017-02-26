@@ -17,6 +17,12 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 BLACK = (0,0,0)
 
+LIGHT_PURPLE = (241,240,255)
+MEDIUM_PURPLE = (195,195,229)
+DARK_PURPLE = (140,72,159)
+DARKER_PURPLE = (68,50,102)
+
+
 #globals
 WIDTH = 600
 HEIGHT = 400
@@ -45,13 +51,19 @@ def setPaddle1Position(percentage):
 
 def getPaddle1Postition():
     percent = 0
-    f = pipes.Template().open('percent.txt', 'r')
+    f = pipes.Template().open('percent1.txt', 'r')
     for line in f:
         setPaddle1Position(float(line))
 
-def setPaddle2Position(pos):
+def getPaddle2Postition():
+    percent = 0
+    f = pipes.Template().open('percent2.txt', 'r')
+    for line in f:
+        setPaddle2Position(float(line))
+
+def setPaddle2Position(percentage):
     global position2
-    position2 = int(pos)
+    position2 = getYCoord(percentage)
 
 def getYCoord(percentage):
     return int(320 * percentage + 40)
@@ -96,7 +108,7 @@ def calibrateBall():
 
 # define event handlers
 def init():
-    calibrateBall()
+    # calibrateBall()
     global paddle1_pos, paddle2_pos, paddle1_vel, paddle2_vel,l_score,r_score  # these are floats
     global score1, score2  # these are ints
     paddle1_pos = [HALF_PAD_WIDTH - 1,HEIGHT/2]
@@ -113,11 +125,11 @@ def init():
 def draw(canvas):
     global paddle1_pos, paddle2_pos, ball_pos, ball_vel, l_score, r_score
 
-    canvas.fill(BLACK)
-    pygame.draw.line(canvas, WHITE, [WIDTH / 2, 0],[WIDTH / 2, HEIGHT], 1)
-    pygame.draw.line(canvas, WHITE, [PAD_WIDTH, 0],[PAD_WIDTH, HEIGHT], 1)
-    pygame.draw.line(canvas, WHITE, [WIDTH - PAD_WIDTH, 0],[WIDTH - PAD_WIDTH, HEIGHT], 1)
-    pygame.draw.circle(canvas, WHITE, [WIDTH//2, HEIGHT//2], 70, 1)
+    canvas.fill(LIGHT_PURPLE)
+    pygame.draw.line(canvas, MEDIUM_PURPLE, [WIDTH / 2, 0],[WIDTH / 2, HEIGHT], 1)
+    pygame.draw.line(canvas, MEDIUM_PURPLE, [PAD_WIDTH, 0],[PAD_WIDTH, HEIGHT], 1)
+    pygame.draw.line(canvas, MEDIUM_PURPLE, [WIDTH - PAD_WIDTH, 0],[WIDTH - PAD_WIDTH, HEIGHT], 1)
+    pygame.draw.circle(canvas, MEDIUM_PURPLE, [WIDTH//2, HEIGHT//2], 70, 1)
 
     # update paddle's vertical position, keep paddle on the screen
     if paddle1_pos[1] > HALF_PAD_HEIGHT and paddle1_pos[1] < HEIGHT - HALF_PAD_HEIGHT:
@@ -139,9 +151,9 @@ def draw(canvas):
     ball_pos[1] += int(ball_vel[1])
 
     #draw paddles and ball
-    pygame.draw.circle(canvas, RED, ball_pos, 20, 0)
-    pygame.draw.polygon(canvas, GREEN, [[paddle1_pos[0] - HALF_PAD_WIDTH, paddle1_pos[1] - HALF_PAD_HEIGHT], [paddle1_pos[0] - HALF_PAD_WIDTH, paddle1_pos[1] + HALF_PAD_HEIGHT], [paddle1_pos[0] + HALF_PAD_WIDTH, paddle1_pos[1] + HALF_PAD_HEIGHT], [paddle1_pos[0] + HALF_PAD_WIDTH, paddle1_pos[1] - HALF_PAD_HEIGHT]], 0)
-    pygame.draw.polygon(canvas, GREEN, [[paddle2_pos[0] - HALF_PAD_WIDTH, paddle2_pos[1] - HALF_PAD_HEIGHT], [paddle2_pos[0] - HALF_PAD_WIDTH, paddle2_pos[1] + HALF_PAD_HEIGHT], [paddle2_pos[0] + HALF_PAD_WIDTH, paddle2_pos[1] + HALF_PAD_HEIGHT], [paddle2_pos[0] + HALF_PAD_WIDTH, paddle2_pos[1] - HALF_PAD_HEIGHT]], 0)
+    pygame.draw.circle(canvas, DARK_PURPLE, ball_pos, 20, 0)
+    pygame.draw.polygon(canvas, DARKER_PURPLE, [[paddle1_pos[0] - HALF_PAD_WIDTH, paddle1_pos[1] - HALF_PAD_HEIGHT], [paddle1_pos[0] - HALF_PAD_WIDTH, paddle1_pos[1] + HALF_PAD_HEIGHT], [paddle1_pos[0] + HALF_PAD_WIDTH, paddle1_pos[1] + HALF_PAD_HEIGHT], [paddle1_pos[0] + HALF_PAD_WIDTH, paddle1_pos[1] - HALF_PAD_HEIGHT]], 0)
+    pygame.draw.polygon(canvas, DARKER_PURPLE, [[paddle2_pos[0] - HALF_PAD_WIDTH, paddle2_pos[1] - HALF_PAD_HEIGHT], [paddle2_pos[0] - HALF_PAD_WIDTH, paddle2_pos[1] + HALF_PAD_HEIGHT], [paddle2_pos[0] + HALF_PAD_WIDTH, paddle2_pos[1] + HALF_PAD_HEIGHT], [paddle2_pos[0] + HALF_PAD_WIDTH, paddle2_pos[1] - HALF_PAD_HEIGHT]], 0)
 
     #ball collision check on top and bottom walls
     if int(ball_pos[1]) <= BALL_RADIUS:
@@ -168,11 +180,11 @@ def draw(canvas):
 
     #update scores
     myfont1 = pygame.font.SysFont("Comic Sans MS", 20)
-    label1 = myfont1.render("Score "+str(l_score), 1, (255,255,0))
+    label1 = myfont1.render("Score "+str(l_score), 1, DARK_PURPLE)
     canvas.blit(label1, (50,20))
 
     myfont2 = pygame.font.SysFont("Comic Sans MS", 20)
-    label2 = myfont2.render("Score "+str(r_score), 1, (255,255,0))
+    label2 = myfont2.render("Score "+str(r_score), 1, DARK_PURPLE)
     canvas.blit(label2, (470, 20))
 
 
@@ -201,13 +213,18 @@ def keyup(event):
 
 init()
 
+
 #game loop
 while True:
+    time.sleep(0.01)
     draw(window)
 
-    getPaddle1Postition()
+    # getPaddle1Postition()
+    # getPaddle2Postition()
 
-    paddle1_pos = [3, position1]
+    # paddle1_pos = [3, position1]
+    # paddle2_pos = [596, position2]
+
 
     for event in pygame.event.get():
         if event.type == KEYDOWN:
